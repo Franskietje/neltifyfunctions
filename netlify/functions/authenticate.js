@@ -22,10 +22,15 @@ exports.handler = async function(event, context) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
+        // Returning the token so it can be used in subsequent requests
+        return {
+            statusCode: 200,
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token: data.response.token })
+          };
+          
   } catch (error) {
     return {
       statusCode: 500,
